@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-export function Register({ onRegister }) {
+export function Register({ onSign }) {
 	const [email, setEmail] = React.useState("");
 	const [password, setPassword] = React.useState("");
 
@@ -15,14 +15,14 @@ export function Register({ onRegister }) {
 	function handleSubmit(e) {
 		e.preventDefault();
 		const userRegistration = { email, password };
-		onRegister(userRegistration);
+		onSign(userRegistration);
 	}
 
 	return (
 		<main className="form">
 			<form className="form__auth" onSubmit={handleSubmit}>
 				<div className="form__content">
-					<h3 className="form__title">Sign up</h3>
+					<h3 className="form__title">Log in</h3>
 					<input
 						className="form__input"
 						type="text"
@@ -38,8 +38,8 @@ export function Register({ onRegister }) {
 						onChange={handlePasswordChange}
 					/>
 					<button className="form__register-submit">Sign-up</button>
-					<NavLink to="/singin" className="form__redirect">
-						Already a member? Log in here!
+					<NavLink to="/singup" className="form__redirect">
+						Not a member yet? Sign-up here
 					</NavLink>
 				</div>
 			</form>

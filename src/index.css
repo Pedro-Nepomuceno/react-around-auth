@@ -44,4 +44,9 @@
 @import url(./blocks/profile/__change-photo/profile__change-photo.css);
 @import url(./blocks/popup/__content/_type/popup__content_type_edit.css);
 @import url(./blocks/form/form.css);
-@import url(./blocks/form/form__register/form__register.css);
+@import url(./blocks/form/__auth/form__auth.css);
+@import url(./blocks/form/__content/form__content.css);
+@import url(./blocks/form/__title/form__title.css);
+@import url(./blocks/form/__input/form__input.css);
+@import url(./blocks/form/__register-submit/form__register-submit.css);
+@import url(./blocks/form/__redirect/form__redirect.css);

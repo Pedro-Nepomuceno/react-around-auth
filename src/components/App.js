@@ -3,13 +3,15 @@ import Main from "./Main.js";
 import Footer from "./Footer.js";
 import ImagePopup from "./ImagePopup.js";
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import api from "../utils/api";
 import auth from "../utils/auth.js";
+import { Register } from "./Register.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { EditProfilePopup } from "../components/EditProfilePopup";
 import { EditAvatarPopup } from "./EditAvatarPopup";
 import { AddPlacePopup } from "./AddPlacePopup";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
 	const [cards, setCards] = React.useState([]);
@@ -125,20 +127,31 @@ function App() {
 				console.log(err);
 			});
 	}
+	function onRegister(email, password) {
+		auth.register(email, password).then((data) => {
+			if (data._id) {
+			}
+		});
+	}
 
 	return (
 		<div className="page">
 			<CurrentUserContext.Provider value={currentUser}>
 				<Header />
-				<Main
-					onEditAvatarClick={handleEditAvatarClick}
-					onEditProfileClick={handleEditProfileClick}
-					onAddPlaceClick={handleAddPlaceClick}
-					onCardClick={handleCardClick}
-					handleCardDelete={handleCardDelete}
-					handleCardLike={handleCardLike}
-					cards={cards}
-				/>
+				<Switch>
+					<ProtectedRoute exact path="/">
+						<Main
+							onEditAvatarClick={handleEditAvatarClick}
+							onEditProfileClick={handleEditProfileClick}
+							onAddPlaceClick={handleAddPlaceClick}
+							onCardClick={handleCardClick}
+							handleCardDelete={handleCardDelete}
+							handleCardLike={handleCardLike}
+							cards={cards}
+						/>
+					</ProtectedRoute>
+					<Register onRegister={onRegister} />
+				</Switch>
 				<Footer />
 				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
