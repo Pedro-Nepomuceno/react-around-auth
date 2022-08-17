@@ -1,8 +1,7 @@
 import React from "react";
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-export function Register({ onSign }) {
+export function Login({ onSign }) {
 	const [email, setEmail] = React.useState("");
 	const [password, setPassword] = React.useState("");
 
@@ -32,12 +31,12 @@ export function Register({ onSign }) {
 					/>
 					<input
 						className="form__input"
-						type="text"
+						type="password"
 						placeholder="Password"
 						required
 						onChange={handlePasswordChange}
 					/>
-					<button className="form__register-submit">Sign-up</button>
+					<button className="form__register-submit">Log in</button>
 					<NavLink to="/singup" className="form__redirect">
 						Not a member yet? Sign-up here
 					</NavLink>

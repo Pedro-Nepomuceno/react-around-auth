@@ -50,3 +50,5 @@
 @import url(./blocks/form/__input/form__input.css);
 @import url(./blocks/form/__register-submit/form__register-submit.css);
 @import url(./blocks/form/__redirect/form__redirect.css);
+@import url(./blocks/popup/__infoTool/popup__infoTool.css);
+@import url(./blocks/popup/__text/popup__text.css);

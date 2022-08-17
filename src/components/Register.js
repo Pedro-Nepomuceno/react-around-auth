@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 export function Register({ onRegister }) {
@@ -38,7 +37,7 @@ export function Register({ onRegister }) {
 						onChange={handlePasswordChange}
 					/>
 					<button className="form__register-submit">Sign-up</button>
-					<NavLink to="/singin" className="form__redirect">
+					<NavLink to="/signin" className="form__redirect">
 						Already a member? Log in here!
 					</NavLink>
 				</div>

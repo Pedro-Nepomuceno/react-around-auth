@@ -18,6 +18,26 @@ class Auth {
 			}),
 		}).then(this._handleServerResponse);
 	}
+
+	login({ email, password }) {
+		console.log(JSON.stringify({ password, email }));
+
+		return fetch(`${this.baseUrl}/signin`, {
+			method: "POST",
+			headers: this.headers,
+			body: JSON.stringify({ password, email }),
+		}).then(this._handleServerResponse);
+	}
+
+	checkToken(token) {
+		return fetch(`${this._baseUrl}/users/me`, {
+			method: "GET",
+			headers: {
+				...this.headers,
+				Authorization: `Bearer ${token}`,
+			},
+		}).then(this._handleServerResponse);
+	}
 }
 const auth = new Auth({
 	baseUrl: "https://register.nomoreparties.co",

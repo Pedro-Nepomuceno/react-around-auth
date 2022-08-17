@@ -1,9 +1,10 @@
+import { useState, useEffect } from "react";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
 import ImagePopup from "./ImagePopup.js";
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 import api from "../utils/api";
 import auth from "../utils/auth.js";
 import { Register } from "./Register.js";
@@ -12,6 +13,8 @@ import { EditProfilePopup } from "../components/EditProfilePopup";
 import { EditAvatarPopup } from "./EditAvatarPopup";
 import { AddPlacePopup } from "./AddPlacePopup";
 import ProtectedRoute from "./ProtectedRoute";
+import { Login } from "./Login";
+import { InfoTooltip } from "./InfoTooltip";
 
 function App() {
 	const [cards, setCards] = React.useState([]);
@@ -22,6 +25,17 @@ function App() {
 	);
 	const [selectedCard, setSelectedCard] = React.useState(null);
 	const [currentUser, setCurrentUser] = React.useState([]);
+	const [infoToolTip, setInfoToolTip] = useState(false);
+	const [status, setStatus] = useState(false);
+	const [email, setEmail] = React.useState("");
+
+	const history = useHistory();
+	React.useEffect(() => {
+		const token = localStorage.getItem("jwt");
+		if (token) {
+			auth.checkToken(token);
+		}
+	}, []);
 
 	React.useEffect(() => {
 		api
@@ -52,6 +66,7 @@ function App() {
 		setIsAvatarPopupOpen(false);
 		setEditProfilePopupOpen(false);
 		setIsAddPlacePopupOpen(false);
+		setInfoToolTip(false);
 	}
 	function handleUpdateUser(user) {
 		api
@@ -128,10 +143,46 @@ function App() {
 			});
 	}
 	function onRegister(email, password) {
-		auth.register(email, password).then((data) => {
-			if (data._id) {
-			}
-		});
+		auth
+			.register(email, password)
+			.then((res) => {
+				if (res.data._id) {
+					history.push("/signin");
+					setInfoToolTip(true);
+					setStatus(true);
+					setTimeout(() => {
+						handleClosePopup();
+					}, 3000);
+				} else {
+					setInfoToolTip(true);
+					setStatus(false);
+				}
+			})
+			.catch(() => {
+				setInfoToolTip(true);
+				setStatus(false);
+			});
+	}
+
+	function onLogin(email, password) {
+		auth
+			.login(email, password)
+			.then((res) => {
+				if (res.token) {
+					setInfoToolTip(true);
+					setStatus(true);
+					setEmail(email);
+					localStorage.setItem("jwt", res.token);
+					history.push("/");
+				} else {
+					setInfoToolTip(true);
+					setStatus(false);
+				}
+			})
+			.catch(() => {
+				setInfoToolTip(true);
+				setStatus(false);
+			});
 	}
 
 	return (
@@ -139,7 +190,7 @@ function App() {
 			<CurrentUserContext.Provider value={currentUser}>
 				<Header />
 				<Switch>
-					<ProtectedRoute exact path="/">
+					<ProtectedRoute exact path="/" loggedIn={infoToolTip}>
 						<Main
 							onEditAvatarClick={handleEditAvatarClick}
 							onEditProfileClick={handleEditProfileClick}
@@ -150,8 +201,18 @@ function App() {
 							cards={cards}
 						/>
 					</ProtectedRoute>
-					<Register onRegister={onRegister} />
+					<Route path="/signup">
+						<Register onRegister={onRegister} />
+					</Route>
+					<Route path="/signin">
+						<Login onSign={onLogin} />
+					</Route>
 				</Switch>
+				<InfoTooltip
+					isOpen={infoToolTip}
+					status={status}
+					onClose={handleClosePopup}
+				/>
 				<Footer />
 				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
