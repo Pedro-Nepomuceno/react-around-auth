@@ -52,3 +52,7 @@
 @import url(./blocks/form/__redirect/form__redirect.css);
 @import url(./blocks/popup/__infoTool/popup__infoTool.css);
 @import url(./blocks/popup/__text/popup__text.css);
+@import url(./blocks/header/__auth-link/header__auth-link.css);
+@import url(./blocks/header/__auth-wrapper/header__auth-wrapper.css);
+@import url(./blocks/header/__logout/header__logout.css);
+@import url(./blocks/header/__user/header__user.css);

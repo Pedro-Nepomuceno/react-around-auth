@@ -31,7 +31,7 @@ export function Register({ onRegister }) {
 					/>
 					<input
 						className="form__input"
-						type="text"
+						type="password"
 						placeholder="Password"
 						required
 						onChange={handlePasswordChange}

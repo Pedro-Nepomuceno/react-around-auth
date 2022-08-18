@@ -30,12 +30,6 @@ function App() {
 	const [email, setEmail] = React.useState("");
 
 	const history = useHistory();
-	React.useEffect(() => {
-		const token = localStorage.getItem("jwt");
-		if (token) {
-			auth.checkToken(token);
-		}
-	}, []);
 
 	React.useEffect(() => {
 		api
@@ -164,16 +158,16 @@ function App() {
 			});
 	}
 
-	function onLogin(email, password) {
+	function onLogin({ email, password }) {
 		auth
-			.login(email, password)
+			.login({ email, password })
 			.then((res) => {
 				if (res.token) {
 					setInfoToolTip(true);
 					setStatus(true);
 					setEmail(email);
 					localStorage.setItem("jwt", res.token);
-					history.push("/");
+					history.push("/abc");
 				} else {
 					setInfoToolTip(true);
 					setStatus(false);
@@ -184,11 +178,35 @@ function App() {
 				setStatus(false);
 			});
 	}
+	React.useEffect(() => {
+		const token = localStorage.getItem("jwt");
+		console.log(token);
+		if (token) {
+			auth
+				.checkToken(token)
+				.then((res) => {
+					if (res) {
+						setEmail(res.data.email);
+						setInfoToolTip(true);
+						history.push("/");
+					} else {
+						return;
+					}
+				})
+				.catch((err) => console.log(err));
+		}
+	}, []);
+
+	function onSignOut() {
+		localStorage.removeItem("jwt");
+		setInfoToolTip(false);
+		history.push("/signin");
+	}
 
 	return (
 		<div className="page">
 			<CurrentUserContext.Provider value={currentUser}>
-				<Header />
+				<Header onSignOut={onSignOut} email={email} />
 				<Switch>
 					<ProtectedRoute exact path="/" loggedIn={infoToolTip}>
 						<Main

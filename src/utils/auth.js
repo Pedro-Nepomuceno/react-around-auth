@@ -20,8 +20,6 @@ class Auth {
 	}
 
 	login({ email, password }) {
-		console.log(JSON.stringify({ password, email }));
-
 		return fetch(`${this.baseUrl}/signin`, {
 			method: "POST",
 			headers: this.headers,
@@ -30,7 +28,7 @@ class Auth {
 	}
 
 	checkToken(token) {
-		return fetch(`${this._baseUrl}/users/me`, {
+		return fetch(`${this.baseUrl}/users/me`, {
 			method: "GET",
 			headers: {
 				...this.headers,
