@@ -167,7 +167,7 @@ function App() {
 					setStatus(true);
 					setEmail(email);
 					localStorage.setItem("jwt", res.token);
-					history.push("/abc");
+					history.push("/");
 				} else {
 					setInfoToolTip(true);
 					setStatus(false);
