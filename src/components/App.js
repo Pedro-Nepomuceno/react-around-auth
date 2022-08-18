@@ -26,6 +26,7 @@ function App() {
 	const [selectedCard, setSelectedCard] = React.useState(null);
 	const [currentUser, setCurrentUser] = React.useState([]);
 	const [infoToolTip, setInfoToolTip] = useState(false);
+	const [loggedIn, setIsLogged] = useState(false);
 	const [status, setStatus] = useState(false);
 	const [email, setEmail] = React.useState("");
 
@@ -163,9 +164,8 @@ function App() {
 			.login({ email, password })
 			.then((res) => {
 				if (res.token) {
-					setInfoToolTip(true);
-					setStatus(true);
 					setEmail(email);
+					setIsLogged(true);
 					localStorage.setItem("jwt", res.token);
 					history.push("/");
 				} else {
@@ -187,7 +187,7 @@ function App() {
 				.then((res) => {
 					if (res) {
 						setEmail(res.data.email);
-						setInfoToolTip(true);
+						setIsLogged(true);
 						history.push("/");
 					} else {
 						return;
@@ -208,7 +208,7 @@ function App() {
 			<CurrentUserContext.Provider value={currentUser}>
 				<Header onSignOut={onSignOut} email={email} />
 				<Switch>
-					<ProtectedRoute exact path="/" loggedIn={infoToolTip}>
+					<ProtectedRoute exact path="/" loggedIn={setIsLogged}>
 						<Main
 							onEditAvatarClick={handleEditAvatarClick}
 							onEditProfileClick={handleEditProfileClick}
