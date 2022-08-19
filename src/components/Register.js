@@ -25,6 +25,7 @@ export function Register({ onRegister }) {
 					<input
 						className="form__input"
 						type="text"
+						autoComplete="username"
 						placeholder="Email"
 						required
 						onChange={handleEmailChange}
@@ -32,6 +33,7 @@ export function Register({ onRegister }) {
 					<input
 						className="form__input"
 						type="password"
+						autoComplete="current-password"
 						placeholder="Password"
 						required
 						onChange={handlePasswordChange}

@@ -25,7 +25,11 @@ function Main({
 						/>
 					</div>
 					{currentuserData.avatar && (
-						<img className="profile__avatar-pic" src={currentuserData.avatar} />
+						<img
+							className="profile__avatar-pic"
+							src={currentuserData.avatar}
+							alt="avatar"
+						/>
 					)}
 				</div>
 				<div className="profile__info">

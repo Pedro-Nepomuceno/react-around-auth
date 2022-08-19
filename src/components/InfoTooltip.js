@@ -8,12 +8,16 @@ export function InfoTooltip({ isOpen, status, onClose }) {
 			<div className="popup__content">
 				{status ? (
 					<div className="popup__infoTool">
-						<img className="popup__infoTool-image" src={successIcon} />
+						<img
+							className="popup__infoTool-image"
+							src={successIcon}
+							alt="success"
+						/>
 						<p className="popup__text">Success!You have now been registered.</p>
 					</div>
 				) : (
 					<div className="popup__infoTool">
-						<img src={failIcon} />
+						<img src={failIcon} alt="fail" />
 						<p className="popup__text">
 							Oops! Something went wrong, please try again.
 						</p>

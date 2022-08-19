@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
 import ImagePopup from "./ImagePopup.js";
 import React from "react";
-import { Route, Switch, Redirect, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import api from "../utils/api";
 import auth from "../utils/auth.js";
 import { Register } from "./Register.js";
@@ -180,7 +180,6 @@ function App() {
 	}
 	React.useEffect(() => {
 		const token = localStorage.getItem("jwt");
-		console.log(token);
 		if (token) {
 			auth
 				.checkToken(token)
@@ -208,7 +207,7 @@ function App() {
 			<CurrentUserContext.Provider value={currentUser}>
 				<Header onSignOut={onSignOut} email={email} />
 				<Switch>
-					<ProtectedRoute exact path="/" loggedIn={setIsLogged}>
+					<ProtectedRoute exact path="/" loggedIn={loggedIn}>
 						<Main
 							onEditAvatarClick={handleEditAvatarClick}
 							onEditProfileClick={handleEditProfileClick}
@@ -250,18 +249,6 @@ function App() {
 
 				<ImagePopup card={selectedCard} onClose={handleClosePopup} />
 			</CurrentUserContext.Provider>
-			<div className="popup" id="delete-popup">
-				<div className="popup__content popup__content_type_delete">
-					<button className="popup__close" type="button"></button>
-					<h3 className="popup__title">Are you sure?</h3>
-
-					<button
-						type="submit"
-						className="popup__submit popup__submit_type_delete">
-						Yes
-					</button>
-				</div>
-			</div>
 		</div>
 	);
 }

@@ -57,7 +57,6 @@ export function EditProfilePopup({ isOpen, onClose, onSubmit, onUpdateUser }) {
 				type="text"
 				placeholder="name"
 				className="popup__input popup__input_type_name"
-				id="name"
 				required
 				minLength="2"
 				maxLength="40"
@@ -74,7 +73,6 @@ export function EditProfilePopup({ isOpen, onClose, onSubmit, onUpdateUser }) {
 				type="text"
 				placeholder="Description"
 				className="popup__input popup__input_type_description"
-				id="description"
 				required
 				minLength="2"
 				maxLength="200"

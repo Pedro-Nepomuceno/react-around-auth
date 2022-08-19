@@ -22,7 +22,6 @@ function PopupWithForm({
 				<h3 className="popup__title">{title}</h3>
 				<form
 					onSubmit={onSubmit}
-					id="profile-form"
 					className="popup__form"
 					name={name}
 					noValidate>
